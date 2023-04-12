@@ -1,11 +1,19 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-    name: nginx
-    namespace: dev
+  name: ip-app-deployment
 spec:
-  containers:
-  - name: nginx
-    image: nginx:1.14.2
-    ports:
-       - containerPort: 80
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ip-app
+  template:
+    metadata:
+      labels:
+        app: ip-app
+    spec:
+      containers:
+      - name: ipapp
+        image: harshajain/ip-app:1
+        ports:
+        - containerPort: 80
